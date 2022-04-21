@@ -1,15 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask
+
+import api
 
 app = Flask(__name__)
-
-
-@app.route('/', methods=['POST'])
-def hello_world_post():
-    data = request.json
-    print(data['asdf'])
-    data['res'] = "123"
-
-    return jsonify(data)
+app.register_blueprint(api.blue)
 
 
 if __name__ == '__main__':
