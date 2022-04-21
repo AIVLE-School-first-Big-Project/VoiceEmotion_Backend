@@ -1,9 +1,22 @@
-from flask import Flask
+import os
 
-import api
+from flask import Flask, jsonify, request
+from werkzeug.utils import secure_filename
+
+UPLOAD_DIRECTORY = "./tmp"
+
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.mkdir(UPLOAD_DIRECTORY)
 
 app = Flask(__name__)
-app.register_blueprint(api.blue)
+
+@app.route("/receive", methods=['post'])
+def form():
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+    return jsonify({"status": 'success'})
+
 
 
 if __name__ == '__main__':
