@@ -29,10 +29,6 @@ jobs:
         run: |
           pip install oitnb isort
           isort . && oitnb .
-      - name: s
-        if: steps.python.outcome == 'failure'
-        run: |
-          echo pass
 
       - name: Commit
         if: steps.python.outcome == 'failure'
