@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 
-UPLOAD_DIRECTORY = './tmp/'
+UPLOAD_DIRECTORY = "./tmp/"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.mkdir(UPLOAD_DIRECTORY)
@@ -11,7 +11,17 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 app = Flask(__name__)
 
 
-@app.route('/receive', methods=['post'])
+
+
+
+
+
+
+
+
+
+
+@app.route('/receive', methods=["post"])
 def form():
     file = request.files['file']
     filename = secure_filename(file.filename)
