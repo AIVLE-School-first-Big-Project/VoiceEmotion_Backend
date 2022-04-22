@@ -41,19 +41,7 @@ if (navigator.mediaDevices === undefined) {
 
 navigator.mediaDevices.getUserMedia(constraintObj)
   .then(function (mediaStreamObj) {
-    let video = document.querySelector('video');
-    if ("srcObject" in video) {
-      video.srcObject = mediaStreamObj;
-    } else {
-      video.src = window.URL.createObjectURL(mediaStreamObj);
-    }
-
-    // video.onloadedmetadata = function (ev) {
-    //   video.play();
-    // };
-
     let start = document.getElementById('btnStart');
-    let vidSave = document.getElementById('vid2');
     let mediaRecorder = new MediaRecorder(mediaStreamObj);
     let chunks = [];
 
@@ -72,8 +60,6 @@ navigator.mediaDevices.getUserMedia(constraintObj)
       let blob = new Blob(chunks, {'type': 'audio/wav;'});
       post_data(blob)
       chunks = [];
-      let videoURL = window.URL.createObjectURL(blob);
-      vidSave.src = videoURL;
     }
   })
   .catch(function (err) {
