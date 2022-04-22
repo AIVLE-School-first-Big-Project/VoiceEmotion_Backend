@@ -32,7 +32,6 @@ if (navigator.mediaDevices === undefined) {
     .then(devices => {
       devices.forEach(device => {
         console.log(device.kind.toUpperCase(), device.label);
-        //, device.deviceId
       })
     })
     .catch(err => {
@@ -42,21 +41,17 @@ if (navigator.mediaDevices === undefined) {
 
 navigator.mediaDevices.getUserMedia(constraintObj)
   .then(function (mediaStreamObj) {
-    //connect the media stream to the first video element
     let video = document.querySelector('video');
     if ("srcObject" in video) {
       video.srcObject = mediaStreamObj;
     } else {
-      //old version
       video.src = window.URL.createObjectURL(mediaStreamObj);
     }
 
-    video.onloadedmetadata = function (ev) {
-      //show in the video element what is being captured by the webcam
-      video.play();
-    };
+    // video.onloadedmetadata = function (ev) {
+    //   video.play();
+    // };
 
-    //add listeners for saving video/audio
     let start = document.getElementById('btnStart');
     let vidSave = document.getElementById('vid2');
     let mediaRecorder = new MediaRecorder(mediaStreamObj);
@@ -68,13 +63,13 @@ navigator.mediaDevices.getUserMedia(constraintObj)
       setTimeout(() => {
         mediaRecorder.stop();
         console.log(mediaRecorder.state);
-      }, 3000)
+      }, delay)
     })
     mediaRecorder.ondataavailable = function (ev) {
       chunks.push(ev.data);
     }
     mediaRecorder.onstop = (ev) => {
-      let blob = new Blob(chunks, {'type': 'video/mp4;'});
+      let blob = new Blob(chunks, {'type': 'audio/wav;'});
       post_data(blob)
       chunks = [];
       let videoURL = window.URL.createObjectURL(blob);
