@@ -11,21 +11,25 @@ start.onclick = async function (event) {
     audio: true,
   });
   mediaRecorder = new MediaRecorder(mediaStream);
-  mediaRecorder.start();
-
-  setTimeout(() => {
-    mediaRecorder.stop();
-  }, recordTime);
+  new Promise((res, rej) => {
+    audioArray.splice(0);
+  }).then(() => {
+    mediaRecorder.start();
+    setTimeout(() => {
+      mediaRecorder.stop();
+    }, recordTime);
+  });
 
   mediaRecorder.onstart = (ev) => {
     start.style.color = "blue";
   };
   mediaRecorder.onstop = (ev) => {
-    const blob = new Blob(audioArray, { type: "audio/ogg" });
-    audioArray.splice(0);
+    const blob = new Blob(audioArray, { type: "audio/wav" });
 
-    const blobUrl = window.URL.createObjectURL(blob);
-    sendAvi(blobUrl);
+    const audioUrl = URL.createObjectURL(blob);
+
+    // const blobUrl = window.URL.createObjectURL(blob);
+    sendAvi(blob);
     console.log("Send?");
     start.style.color = "black";
   };
