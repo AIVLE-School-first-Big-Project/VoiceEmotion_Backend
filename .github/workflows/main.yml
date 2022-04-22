@@ -28,4 +28,8 @@ jobs:
         run: |
           pip install oitnb isort
           isort . && oitnb .
-
+          git config --global user.name 'ci-cd'
+          git config --global user.email 'ci-cd@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Formatting"
+          git push
