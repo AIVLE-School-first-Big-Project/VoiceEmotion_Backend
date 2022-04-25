@@ -14,9 +14,13 @@ app = Flask(__name__)
 @app.route('/receive', methods=['post'])
 def form():
     file = request.files['file']
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(UPLOAD_DIRECTORY, filename))
-    return 'hello'
+    if file.filename != None:
+        filename = secure_filename(filename=file.filename) # TODO Create Stub
+        file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+        return 'successed'
+    else:
+        pass
+        return 'failed'
 
 
 @app.route('/', methods=['GET'])
