@@ -58,7 +58,7 @@ navigator.mediaDevices
     mediaRecorder.ondataavailable = function (ev) {
       chunks.push(ev.data);
     }
-    mediaRecorder.onstop = (ev) => {
+    mediaRecorder.onstop = () => {
       let blob = new Blob(chunks, {'type': 'audio/wav;'});
       post_data(blob)
       chunks = [];
