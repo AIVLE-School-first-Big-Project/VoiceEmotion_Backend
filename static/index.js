@@ -15,6 +15,7 @@ let delay = 2000;
 let save_file_format = `${new Date().toString()}.wav`;
 let constraintObj = { audio: true };
 
+
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
   navigator.mediaDevices.getUserMedia = function (constraintObj) {
@@ -32,7 +33,7 @@ if (navigator.mediaDevices === undefined) {
     .then((devices) => {
       devices.forEach((device) => {
         console.log(device.kind.toUpperCase(), device.label);
-      });
+      })
     })
     .catch((err) => {
       console.log(err.name, err.message);
@@ -42,7 +43,7 @@ if (navigator.mediaDevices === undefined) {
 navigator.mediaDevices
   .getUserMedia(constraintObj)
   .then(function (mediaStreamObj) {
-    let start = document.getElementById("btnStart");
+    let start = document.getElementById('btnStart');
     let mediaRecorder = new MediaRecorder(mediaStreamObj);
     let chunks = [];
 
@@ -52,16 +53,16 @@ navigator.mediaDevices
       setTimeout(() => {
         mediaRecorder.stop();
         console.log(mediaRecorder.state);
-      }, delay);
-    });
+      }, delay)
+    })
     mediaRecorder.ondataavailable = function (ev) {
       chunks.push(ev.data);
-    };
-    mediaRecorder.onstop = () => {
-      let blob = new Blob(chunks, { type: "audio/wav;" });
-      post_data(blob);
+    }
+    mediaRecorder.onstop = (ev) => {
+      let blob = new Blob(chunks, {'type': 'audio/wav;'});
+      post_data(blob)
       chunks = [];
-    };
+    }
   })
   .catch(function (err) {
     console.log(err.name, err.message);
