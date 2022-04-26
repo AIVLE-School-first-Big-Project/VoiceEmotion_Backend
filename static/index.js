@@ -13,7 +13,7 @@
 let post_address = "/receive";
 let delay = 2000;
 let save_file_format = `${new Date().toString()}.wav`;
-let constraintObj = { audio: true };
+let constraintObj = {audio: true};
 
 
 if (navigator.mediaDevices === undefined) {
@@ -43,7 +43,7 @@ if (navigator.mediaDevices === undefined) {
 navigator.mediaDevices
   .getUserMedia(constraintObj)
   .then(function (mediaStreamObj) {
-    let start = document.getElementById('btnStart');
+    let start = document.getElementById('recordStart');
     let mediaRecorder = new MediaRecorder(mediaStreamObj);
     let chunks = [];
 
