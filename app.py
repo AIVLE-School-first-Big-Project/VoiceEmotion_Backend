@@ -15,7 +15,7 @@ app = Flask(__name__)
 def form():
     file = request.files['file']
     if file.filename != None:
-        filename = secure_filename(filename=file.filename) # TODO Create Stub
+        filename = secure_filename(filename=file.filename)  # TODO Create Stub
         file.save(os.path.join(UPLOAD_DIRECTORY, filename))
         return jsonify({'status': 'success'})
     else:
@@ -28,4 +28,4 @@ def hello():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
