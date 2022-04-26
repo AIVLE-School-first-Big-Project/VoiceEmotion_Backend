@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
 
 UPLOAD_DIRECTORY = './tmp/'
@@ -14,9 +14,12 @@ app = Flask(__name__)
 @app.route('/receive', methods=['post'])
 def form():
     file = request.files['file']
-    filename = secure_filename(file.filename)
-    file.save(os.path.join(UPLOAD_DIRECTORY, filename))
-    return 'hello'
+    if file.filename != None:
+        filename = secure_filename(filename=file.filename)  # TODO Create Stub
+        file.save(os.path.join(UPLOAD_DIRECTORY, filename))
+        return jsonify({'status': 'success'})
+    else:
+        return jsonify({'status': 'fail'})
 
 
 @app.route('/', methods=['GET'])
@@ -25,4 +28,4 @@ def hello():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
