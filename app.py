@@ -11,11 +11,12 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 app = Flask(__name__)
 
 
-@app.route('/receive', methods=['post'])
+@app.route('/receive', methods=['POST'])
 def form():
+    """Get wav file"""
     file = request.files['file']
-    if file.filename != None:
-        filename = secure_filename(filename=file.filename)  # TODO Create Stub
+    if file.filename is not None:
+        filename = secure_filename(filename=file.filename)
         file.save(os.path.join(UPLOAD_DIRECTORY, filename))
         return jsonify({'status': 'success'})
     else:
@@ -24,6 +25,7 @@ def form():
 
 @app.route('/', methods=['GET'])
 def hello():
+    """Render html"""
     return render_template('index.html')
 
 
